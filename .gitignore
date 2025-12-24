@@ -1,6 +1,5 @@
-# Node modules
-node_modules/
-
+# Node modules everywhere
+**/node_modules/
 # Angular build output
 dist/
 dist-angular/
