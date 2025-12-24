@@ -1,0 +1,54 @@
+{
+  "name": "angular-electron-desktop",
+  "version": "1.0.0",
+  "main": "electron/main.js",
+  "scripts": {
+    "ng": "ng",
+    "start": "concurrently \"npm run start:ui\" \"npm run start:electron\"",
+    "start:ui": "cd angular-ui && ng serve",
+    "start:electron": "wait-on http://localhost:4200 && electron .",
+    "electron:dev": "npm run start",
+    "build:ui": "cd angular-ui && ng build --base-href ./",
+    "build:ui:prod": "cd angular-ui && ng build --configuration production --base-href ./ --deploy-url ./",
+    "dist": "npm run build:ui:prod && electron-builder",
+    "electron:build": "npm run build:ui:prod && electron-builder"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.0.0",
+    "@angular/cli": "^18.0.0",
+    "@angular/common": "^18.0.0",
+    "@angular/compiler": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "concurrently": "^9.0.0",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.yourcompany.angular-electron",
+    "productName": "Angular Electron Desktop",
+    "asar": true,
+    "directories": {
+      "output": "dist-electron"
+    },
+  "files": [
+  "electron/**/*",
+  "dist/angular/browser/**/*",
+  "backend/**/*"
+],
+    "extraResources": [
+      {
+        "from": "backend/backend.exe",
+        "to": "backend.exe"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "publish": null
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "electron-log": "^5.4.3"
+  }
+}

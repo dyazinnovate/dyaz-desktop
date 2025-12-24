@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Angular build output
+dist/
+dist-angular/
+
+# Electron build output
+dist-electron/
+
+# Logs
+*.log
