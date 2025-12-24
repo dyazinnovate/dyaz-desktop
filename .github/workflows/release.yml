@@ -24,10 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Angular
-        run: npm run build
+      - name: Build Angular UI
+        run: npm run build:ui:prod
 
       - name: Build & publish Electron
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
         run: npx electron-builder --win --publish always
