@@ -1,0 +1,89 @@
+const { app, BrowserWindow } = require('electron');
+const { spawn } = require('child_process');
+const path = require('path');
+const log = require('electron-log');
+
+let backendProcess;
+
+function startBackend() {
+  try {
+    if (app.isPackaged) {
+      const backendPath = path.join(process.resourcesPath, 'backend.exe');
+      log.info('Starting backend:', backendPath);
+      backendProcess = spawn(backendPath, [], { detached: true });
+    } else {
+      backendProcess = spawn('node', ['backend/server.js'], {
+        shell: true,
+        stdio: 'inherit'
+      });
+    }
+  } catch (e) {
+    log.error('Backend error:', e);
+  }
+}
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1200,
+    height: 800
+  });
+
+  if (app.isPackaged) {
+    const indexPath = path.join(
+      app.getAppPath(),
+      'dist/angular/browser/index.html'  // <-- correct path
+    );
+    console.log('Loading UI:', indexPath);
+    win.loadFile(indexPath);             // loadFile handles asar automatically
+  } else {
+    win.loadURL('http://localhost:4200');
+  }
+
+  win.webContents.openDevTools();
+}
+
+
+function initAutoUpdater() {
+
+   autoUpdater.setFeedURL({
+    provider: "github",
+    owner: "dyazinnovate", // your GitHub username/org
+    repo: "dyaz-desktop",   // your repo
+    private: true,
+   token: process.env.GH_TOKEN, // GitHub personal access token
+  });
+
+  autoUpdater.autoDownload = true;
+autoUpdater.on("checking-for-update", () => log.info("Checking for updates..."));
+  autoUpdater.on("update-available", (info) => log.info("Update available:", info.version));
+  autoUpdater.on("update-not-available", (info) => log.info("No update available"));
+  autoUpdater.on("error", (err) => log.error("Update error:", err));
+  autoUpdater.on("download-progress", (progress) =>
+    log.info(`Download progress: ${progress.percent.toFixed(2)}%`)
+  );
+  autoUpdater.on("update-downloaded", () => {
+    dialog.showMessageBox(mainWindow, {
+      type: "info",
+      title: "Update ready",
+      message: "Restart to apply update?",
+      buttons: ["Restart", "Later"]
+    }).then(r => {
+      if (r.response === 0) autoUpdater.quitAndInstall();
+    });
+  });
+   if (!isDev){ 
+    autoUpdater.checkForUpdatesAndNotify();
+  }
+}
+
+app.whenReady().then(() => {
+  log.info('App ready');
+  startBackend();
+  createWindow();
+   initAutoUpdater();
+ log.info("init auto updater");
+});
+
+app.on('quit', () => {
+  if (backendProcess) backendProcess.kill();
+});
