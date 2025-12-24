@@ -31,11 +31,11 @@
     "directories": {
       "output": "dist-electron"
     },
-  "files": [
-  "electron/**/*",
-  "dist/angular/browser/**/*",
-  "backend/**/*"
-],
+    "files": [
+      "electron/**/*",
+      "dist/angular/browser/**/*",
+      "backend/**/*"
+    ],
     "extraResources": [
       {
         "from": "backend/backend.exe",
@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "electron-log": "^5.4.3"
+    "electron-log": "^5.4.3",
+    "electron-updater": "^6.6.2"
   }
 }
