@@ -48,7 +48,13 @@
     "win": {
       "target": "nsis"
     },
-    "publish": null
+     "publish": [
+      {
+        "provider": "github",
+        "owner": "dyazinnovate",
+        "repo": "dyaz-desktop"
+      }
+    ]
   },
   "dependencies": {
     "cors": "^2.8.5",
