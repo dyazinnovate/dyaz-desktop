@@ -2,8 +2,12 @@ const { app, BrowserWindow } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const log = require('electron-log');
+const { autoUpdater } = require('electron-updater');
 
 let backendProcess;
+let mainWindow;
+const isDev = !app.isPackaged;
+
 
 function startBackend() {
   try {
@@ -23,7 +27,7 @@ function startBackend() {
 }
 
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800
   });
@@ -31,15 +35,15 @@ function createWindow() {
   if (app.isPackaged) {
     const indexPath = path.join(
       app.getAppPath(),
-      'dist/angular/browser/index.html'  // <-- correct path
+      'dist/angular/browser/index.html'
     );
     console.log('Loading UI:', indexPath);
-    win.loadFile(indexPath);             // loadFile handles asar automatically
+    mainWindow.loadFile(indexPath);
   } else {
-    win.loadURL('http://localhost:4200');
+    mainWindow.loadURL('http://localhost:4200');
   }
 
-  win.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 }
 
 
