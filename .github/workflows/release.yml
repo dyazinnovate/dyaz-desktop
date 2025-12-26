@@ -1,4 +1,4 @@
-name: Build & Release Electron App 
+name: Build & Release Electron App
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -27,21 +27,23 @@ jobs:
       - name: Install Angular UI dependencies
         run: |
           cd angular-ui
-          npm install
+          npm ci
+
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+
       - name: Bump version
         run: 'npm version patch -m "ci: bump version to %s [skip ci]"'
+
       - name: Push version bump and tag
-        run: |
-          git push origin main --follow-tags
+        run: git push origin main --follow-tags
 
       - name: Build Angular UI
         run: npm run build
 
-      - name: Build & publish Electron
+      - name: Build & Publish Electron
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx electron-builder --win --publish always
