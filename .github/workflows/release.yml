@@ -21,8 +21,13 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm ci
+
+      - name: Install Angular UI dependencies
+        run: |
+          cd angular-ui
+          npm ci
 
       - name: Build Angular UI
         run: npm run build:ui:prod
