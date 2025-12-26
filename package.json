@@ -1,6 +1,6 @@
 {
   "name": "angular-electron-desktop",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "electron/main.js",
   "overrides": {
     "chokidar": "3.6.0"
@@ -48,7 +48,7 @@
     "win": {
       "target": "nsis"
     },
-     "publish": [
+    "publish": [
       {
         "provider": "github",
         "owner": "dyazinnovate",
