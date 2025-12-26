@@ -1,6 +1,6 @@
 {
   "name": "angular-electron-desktop",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "electron/main.js",
   "overrides": {
     "chokidar": "3.6.0"
