@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const log = require('electron-log');
@@ -65,16 +65,18 @@ autoUpdater.on("checking-for-update", () => log.info("Checking for updates..."))
   autoUpdater.on("download-progress", (progress) =>
     log.info(`Download progress: ${progress.percent.toFixed(2)}%`)
   );
-  autoUpdater.on("update-downloaded", () => {
-    dialog.showMessageBox(mainWindow, {
-      type: "info",
-      title: "Update ready",
-      message: "Restart to apply update?",
-      buttons: ["Restart", "Later"]
-    }).then(r => {
-      if (r.response === 0) autoUpdater.quitAndInstall();
-    });
+ autoUpdater.on('update-downloaded', () => {
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Update Ready',
+    message: 'A new version has been downloaded. Restart now?',
+    buttons: ['Restart', 'Later']
+  }).then(result => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
   });
+});
    if (!isDev){ 
     autoUpdater.checkForUpdatesAndNotify();
   }
