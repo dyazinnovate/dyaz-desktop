@@ -1,6 +1,6 @@
 {
   "name": "angular-electron-desktop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "electron/main.js",
   "overrides": {
   "chokidar": "3.6.0"
@@ -12,9 +12,9 @@
     "start:electron": "wait-on http://localhost:4200 && electron .",
     "electron:dev": "npm run start",
     "build:ui": "cd angular-ui && ng build --base-href ./",
-    "build:ui:prod": "cd angular-ui && ng build --configuration production --base-href ./ --deploy-url ./",
-    "dist": "npm run build:ui:prod && electron-builder",
-    "electron:build": "npm run build:ui:prod && electron-builder"
+    "build": "cd angular-ui && ng build --configuration production --base-href ./ --deploy-url ./",
+    "dist": "npm run build && electron-builder",
+    "electron:build": "npm run build && electron-builder"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.0",

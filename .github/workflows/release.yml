@@ -1,4 +1,4 @@
-name: Build & Release Electron App
+name: Build & Release Electron App 
 
 on:
   push:
@@ -27,10 +27,13 @@ jobs:
       - name: Install Angular UI dependencies
         run: |
           cd angular-ui
-          npm ci
+          npm install
+
+      - name: Bump version
+        run: npm version patch -m "ci: bump version to %s [skip ci]"
 
       - name: Build Angular UI
-        run: npm run build:ui:prod
+        run: npm run build
 
       - name: Build & publish Electron
         env:
