@@ -30,7 +30,7 @@ jobs:
           npm install
 
       - name: Bump version
-        run: npm version patch -m "ci: bump version to %s [skip ci]"
+        run: 'npm version patch -m "ci: bump version to %s [skip ci]"'
 
       - name: Build Angular UI
         run: npm run build
