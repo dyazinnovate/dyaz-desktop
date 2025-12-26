@@ -34,6 +34,9 @@ jobs:
           git config user.email "actions@github.com"
       - name: Bump version
         run: 'npm version patch -m "ci: bump version to %s [skip ci]"'
+      - name: Push version bump and tag
+        run: |
+          git push origin main --follow-tags
 
       - name: Build Angular UI
         run: npm run build
