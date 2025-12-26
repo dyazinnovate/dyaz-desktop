@@ -2,6 +2,9 @@
   "name": "angular-electron-desktop",
   "version": "1.0.0",
   "main": "electron/main.js",
+  "overrides": {
+  "chokidar": "3.6.0"
+},
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"npm run start:ui\" \"npm run start:electron\"",
